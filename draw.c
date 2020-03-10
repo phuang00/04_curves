@@ -57,29 +57,8 @@ void add_curve( struct matrix *edges,
                 double x2, double y2,
                 double x3, double y3,
                 double step, int type ) {
-  struct matrix * x = new_matrix(4, 1);
-  x->lastcol++;
-  x->m[0][0] = x0;
-  x->m[1][0] = x1;
-  x->m[2][0] = x2;
-  x->m[3][0] = x3;
-  struct matrix * y = new_matrix(4, 1);
-  y->lastcol++;
-  y->m[0][0] = y0;
-  y->m[1][0] = y1;
-  y->m[2][0] = y2;
-  y->m[3][0] = y3;
-  if (type == HERMITE){
-    struct matrix * h = make_hermite();
-    matrix_mult(h, x);
-    matrix_mult(h, y);
-
-  }
-  else if (type == BEZIER){
-    struct matrix * b = make_bezier();
-    matrix_mult(b, x);
-    matrix_mult(b, y);
-  }
+  struct matrix * x = generate_curve_coefs(x0, x1, x2, x3, type);
+  struct matrix * y = generate_curve_coefs(y0, y1, y2, y3, type);
   double t;
   double prev_x = -1;
   double prev_y = -1;
